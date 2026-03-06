@@ -382,26 +382,42 @@
       clip-path: polygon(0 0, 100% 0, 85% 78%, 50% 100%, 15% 78%);
     }
 
-.title{
-  position:absolute;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
+    .title {
+      position: absolute;
+      left: 50%;
+      bottom: 40px;
+      border-radius: 30px;
+      transform: translateX(-50%);
+      color: #fff6fb;
+      font-size: clamp(20px, 2.6vw, 32px);
+      letter-spacing: 0.5px;
+      z-index: 10;
+      text-shadow: 0 0 10px rgba(255,255,255,0.18);
+      white-space: nowrap;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ff8ab5, #ff4f8d, #ffd76a);
+      background-size: 200% 200%;
+      box-shadow: 0 0 20px rgba(255,120,170,0.5),
+      inset 0 0 10px rgba(255,255,255,0.2);
+      animation: titleGlow 6s ease infinite, titleFloat 3s ease-in-out infinite;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 10px 26px;
+    }
 
-  padding:6px 16px;
-  border-radius:25px;
+    @keyframes titleGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+  }
 
-  background:rgba(255,200,215,0.85);
-  backdrop-filter:blur(6px);
+  @keyframes titleFloat {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+  }
 
-  color:white;
-  font-weight:bold;
-  font-size:clamp(18px,4vw,26px);
 
-  box-shadow:0 8px 20px rgba(255,120,160,0.3);
-  white-space:nowrap;
-  z-index:50;
-}
     .subtitle {
       position: absolute;
       left: 50%;
@@ -662,3 +678,5 @@
   </script>
 </body>
 </html>
+
+ 
