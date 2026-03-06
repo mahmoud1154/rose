@@ -382,44 +382,26 @@
       clip-path: polygon(0 0, 100% 0, 85% 78%, 50% 100%, 15% 78%);
     }
 
-.title {
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
+.title{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
 
-  display: inline-block;
-  width: auto;
-  height: auto;
+  padding:6px 16px;
+  border-radius:25px;
 
-  padding: 6px 18px;
-  border-radius: 30px;
+  background:rgba(255,200,215,0.85);
+  backdrop-filter:blur(6px);
 
-  font-size: clamp(18px, 4vw, 26px);
-  font-weight: 600;
+  color:white;
+  font-weight:bold;
+  font-size:clamp(18px,4vw,26px);
 
-  color: white;
-
-  background: linear-gradient(135deg, #ffb6c9, #ffc9d8);
-
-  box-shadow:
-    0 6px 14px rgba(255,150,180,0.25),
-    inset 0 1px 3px rgba(255,255,255,0.35);
-
-  text-align: center;
-  white-space: nowrap;
-
-  z-index: 20;
+  box-shadow:0 8px 20px rgba(255,120,160,0.3);
+  white-space:nowrap;
+  z-index:50;
 }
-
-@media (max-width:600px){
-  .title{
-    top: 12px;
-    font-size: 20px;
-    padding: 5px 14px;
-  }
-}
-
     .subtitle {
       position: absolute;
       left: 50%;
