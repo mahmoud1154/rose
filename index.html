@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>باقة ورد</title>
+  <title>باقة ورد </title>
   <style>
     * {
       box-sizing: border-box;
@@ -22,14 +22,9 @@
       --paper3: #d79eac;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
-      overflow: hidden;
-    }
-
     body {
-      min-height: 100svh;
+      min-height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -43,10 +38,10 @@
 
     .scene {
       position: relative;
-      width: min(100vw, 920px);
-      height: 100svh;
+      width: min(92vw, 920px);
+      aspect-ratio: 1 / 1;
       overflow: hidden;
-      border-radius: 0;
+      border-radius: 30px;
     }
 
     .ambient-light {
@@ -84,16 +79,15 @@
       position: absolute;
       left: 50%;
       top: 53%;
-      width: 560px;
-      height: 740px;
-      transform: translate(-50%, -50%) scale(1);
-      transform-origin: center center;
+      width: min(60vw, 560px);
+      height: min(78vw, 740px);
+      transform: translate(-50%, -50%);
       animation: floaty 4.5s ease-in-out infinite;
     }
 
     @keyframes floaty {
-      0%, 100% { transform: translate(-50%, -50%) scale(var(--scale, 1)) translateY(0); }
-      50% { transform: translate(-50%, -50%) scale(var(--scale, 1)) translateY(-12px); }
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-12px); }
     }
 
     .glow {
@@ -109,6 +103,7 @@
       pointer-events: none;
     }
 
+    /* التغليف */
     .wrap-back-left,
     .wrap-back-right,
     .wrap-front-left,
@@ -390,11 +385,12 @@
     .title {
       position: absolute;
       left: 50%;
-      top: max(10px, env(safe-area-inset-top));
+      bottom: 40px;
+      border-radius: 30px;
       transform: translateX(-50%);
       color: #fff6fb;
-      font-size: clamp(20px, 5vw, 36px);
-      letter-spacing: 1px;
+      font-size: clamp(20px, 2.6vw, 32px);
+      letter-spacing: 0.5px;
       z-index: 10;
       text-shadow: 0 0 10px rgba(255,255,255,0.18);
       white-space: nowrap;
@@ -404,23 +400,23 @@
       box-shadow: 0 0 20px rgba(255,120,170,0.5),
       inset 0 0 10px rgba(255,255,255,0.2);
       animation: titleGlow 6s ease infinite, titleFloat 3s ease-in-out infinite;
-      padding: 10px 22px;
-      border-radius: 30px;
-      max-width: calc(100vw - 24px);
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 10px 26px;
     }
 
     @keyframes titleGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+  }
 
-    @keyframes titleFloat {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-6px); }
-    }
+  @keyframes titleFloat {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
 
     .subtitle {
       position: absolute;
@@ -477,63 +473,43 @@
       z-index: 0;
     }
 
-    /* تابلت */
     @media (max-width: 768px) {
+      .bouquet-area {
+        width: 520px;
+        height: 700px;
+      }
+
+      .title {
+        bottom: 46px;
+      }
+
+      .subtitle {
+        bottom: 22px;
+      }
+    }
+
+    @media (max-width: 560px) {
       .scene {
         width: 100vw;
-        height: 100svh;
+        height: 100vh;
+        aspect-ratio: auto;
+        border-radius: 0;
       }
 
       .bouquet-area {
-        --scale: 0.82;
-        top: 56%;
-      }
-    }
-
-    /* جوال */
-    @media (max-width: 560px) {
-      .bouquet-area {
-        --scale: 0.62;
-        top: 58%;
+        transform: translate(-50%, -50%) scale(0.82);
       }
 
-      .title {
-        font-size: clamp(18px, 6vw, 24px);
-        padding: 8px 18px;
-      }
-
-      .sparkle {
-        width: 3px;
-        height: 3px;
-      }
-    }
-
-    /* جوال صغير جدا */
-    @media (max-width: 390px) {
-      .bouquet-area {
-        --scale: 0.54;
-        top: 59%;
-      }
-
-      .title {
-        top: max(12px, env(safe-area-inset-top));
-        font-size: 18px;
-        padding: 8px 14px;
-      }
-    }
-
-    /* شاشات طويلة */
-    @media (max-height: 700px) {
-      .bouquet-area {
-        --scale: 0.56;
-        top: 60%;
+      @keyframes floaty {
+        0%, 100% { transform: translate(-50%, -50%) scale(0.82) translateY(0); }
+        50% { transform: translate(-50%, -50%) scale(0.82) translateY(-10px); }
       }
     }
   </style>
 </head>
 <body>
+<div class="title"> خسل 🫶🏻🫶🏻</div>
   <div class="scene" id="scene">
-    <div class="title">خسل 🫶🏻🫶🏻</div>
     <div class="ambient-light"></div>
     <div class="sparkles" id="sparkles"></div>
 
@@ -564,6 +540,7 @@
         <div class="leaf" style="left:175px; top:170px; transform:scaleX(-1) rotate(18deg) scale(.78);"></div>
       </div>
 
+      <!-- الصف العلوي -->
       <div class="flower pink" style="left:205px; top:18px;">
         <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
         <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
@@ -585,6 +562,7 @@
         <div class="center"></div>
       </div>
 
+      <!-- الصف الأوسط -->
       <div class="flower purple" style="left:205px; top:112px; transform:scale(.96);">
         <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
         <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
@@ -606,6 +584,7 @@
         <div class="center"></div>
       </div>
 
+      <!-- الصف السفلي -->
       <div class="flower peach small" style="left:135px; top:214px;">
         <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
         <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
