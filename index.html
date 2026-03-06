@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>باقة ورد </title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg1: #12051b;
+      --bg2: #2a1036;
+      --gold: #ffd76a;
+      --green1: #49c96c;
+      --green2: #1d7c43;
+      --paper1: #f7d9df;
+      --paper2: #e8bfc9;
+      --paper3: #d79eac;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Tahoma", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 110, 170, 0.14), transparent 22%),
+        radial-gradient(circle at 80% 15%, rgba(162, 110, 255, 0.10), transparent 18%),
+        radial-gradient(circle at 50% 0%, rgba(255, 210, 120, 0.08), transparent 24%),
+        radial-gradient(circle at center, var(--bg2) 0%, #13071d 58%, #07020b 100%);
+    }
+
+    .scene {
+      position: relative;
+      width: min(92vw, 920px);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 30px;
+    }
+
+    .ambient-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255, 145, 190, 0.16), transparent 18%),
+        radial-gradient(circle at 50% 55%, rgba(255,255,255,0.03), transparent 26%);
+      filter: blur(10px);
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      box-shadow: 0 0 10px rgba(255,255,255,0.6);
+      animation: twinkle 2.8s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(0.7); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    .bouquet-area {
+      position: absolute;
+      left: 50%;
+      top: 53%;
+      width: min(60vw, 560px);
+      height: min(78vw, 740px);
+      transform: translate(-50%, -50%);
+      animation: floaty 4.5s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-12px); }
+    }
+
+    .glow {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 110, 170, 0.23), transparent 72%);
+      filter: blur(28px);
+      pointer-events: none;
+    }
+
+    /* التغليف */
+    .wrap-back-left,
+    .wrap-back-right,
+    .wrap-front-left,
+    .wrap-front-right {
+      position: absolute;
+      bottom: 120px;
+      width: 210px;
+      height: 300px;
+      z-index: 0;
+      border-radius: 16px;
+      box-shadow: 0 20px 28px rgba(0,0,0,0.18);
+    }
+
+    .wrap-back-left {
+      left: 70px;
+      background: linear-gradient(180deg, var(--paper1), var(--paper3));
+      clip-path: polygon(0 16%, 100% 0, 72% 100%, 0 100%);
+      transform: rotate(-12deg);
+      opacity: 0.92;
+    }
+
+    .wrap-back-right {
+      right: 70px;
+      background: linear-gradient(180deg, #fbe5ea, #dba6b3);
+      clip-path: polygon(0 0, 100% 16%, 100% 100%, 28% 100%);
+      transform: rotate(12deg);
+      opacity: 0.92;
+    }
+
+    .wrap-front-left {
+      left: 110px;
+      bottom: 95px;
+      width: 150px;
+      height: 250px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.38), rgba(235,182,197,0.88));
+      clip-path: polygon(0 10%, 100% 0, 70% 100%, 0 100%);
+      transform: rotate(-8deg);
+      z-index: 5;
+      backdrop-filter: blur(1px);
+    }
+
+    .wrap-front-right {
+      right: 110px;
+      bottom: 95px;
+      width: 150px;
+      height: 250px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(227,170,186,0.88));
+      clip-path: polygon(0 0, 100% 10%, 100% 100%, 30% 100%);
+      transform: rotate(8deg);
+      z-index: 5;
+      backdrop-filter: blur(1px);
+    }
+
+    .stems {
+      position: absolute;
+      left: 50%;
+      top: 200px;
+      width: 360px;
+      height: 390px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .stem {
+      position: absolute;
+      width: 11px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, var(--green1), var(--green2));
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.15);
+      transform-origin: top center;
+    }
+
+    .leaf {
+      position: absolute;
+      width: 78px;
+      height: 34px;
+      background: linear-gradient(135deg, #62dd86, #25994f);
+      border-radius: 0 100% 0 100%;
+      filter: drop-shadow(0 4px 5px rgba(0,0,0,0.15));
+    }
+
+    .leaf::before {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      left: 49%;
+      top: 13%;
+      background: rgba(255,255,255,0.3);
+      transform: rotate(25deg);
+    }
+
+    .leaf::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .flower {
+      position: absolute;
+      width: 128px;
+      height: 128px;
+      filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.22));
+      z-index: 3;
+      animation: bloom 5s ease-in-out infinite;
+    }
+
+    @keyframes bloom {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .flower.small { width: 112px; height: 112px; }
+    .flower.tiny { width: 100px; height: 100px; }
+
+    .petal {
+      position: absolute;
+      width: 58px;
+      height: 80px;
+      left: 35px;
+      top: 6px;
+      border-radius: 50% 50% 42% 42%;
+      transform-origin: center 58px;
+      box-shadow:
+        inset 8px 8px 10px rgba(255,255,255,0.18),
+        inset -8px -8px 10px rgba(0,0,0,0.10),
+        0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .petal::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 12px;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 48px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.15);
+      filter: blur(0.3px);
+    }
+
+    .inner-petal {
+      position: absolute;
+      width: 40px;
+      height: 58px;
+      left: 44px;
+      top: 26px;
+      border-radius: 50% 50% 42% 42%;
+      transform-origin: center 44px;
+      opacity: 0.95;
+      z-index: 2;
+      filter: brightness(1.05);
+      box-shadow: inset 4px 4px 8px rgba(255,255,255,0.14);
+    }
+
+    .i1 { transform: rotate(20deg) translateY(-4px); }
+    .i2 { transform: rotate(140deg) translateY(-4px); }
+    .i3 { transform: rotate(260deg) translateY(-4px); }
+
+    .p1 { transform: rotate(0deg) translateY(-8px); }
+    .p2 { transform: rotate(45deg) translateY(-8px); }
+    .p3 { transform: rotate(90deg) translateY(-8px); }
+    .p4 { transform: rotate(135deg) translateY(-8px); }
+    .p5 { transform: rotate(180deg) translateY(-8px); }
+    .p6 { transform: rotate(225deg) translateY(-8px); }
+    .p7 { transform: rotate(270deg) translateY(-8px); }
+    .p8 { transform: rotate(315deg) translateY(-8px); }
+
+    .pink .petal,
+    .pink .inner-petal {
+      background: linear-gradient(180deg, #ffd2e2 0%, #ff8eb8 58%, #f24f8c 100%);
+    }
+
+    .red .petal,
+    .red .inner-petal {
+      background: linear-gradient(180deg, #ffc0c7 0%, #ff667f 58%, #d93755 100%);
+    }
+
+    .white .petal,
+    .white .inner-petal {
+      background: linear-gradient(180deg, #ffffff 0%, #f0edf2 62%, #dad2db 100%);
+    }
+
+    .purple .petal,
+    .purple .inner-petal {
+      background: linear-gradient(180deg, #e4ccff 0%, #bb92ff 60%, #915cf2 100%);
+    }
+
+    .peach .petal,
+    .peach .inner-petal {
+      background: linear-gradient(180deg, #ffd7c9 0%, #ffa27f 60%, #f5744f 100%);
+    }
+
+    .center {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      left: 48px;
+      top: 48px;
+      border-radius: 50%;
+      z-index: 4;
+      background: radial-gradient(circle at 30% 30%, #fff2a1, #f1bd38 68%, #d48d14 100%);
+      box-shadow:
+        0 0 14px rgba(255, 190, 60, 0.38),
+        inset 0 0 4px rgba(255,255,255,0.4);
+    }
+
+    .center::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      border: 2px dotted rgba(120,80,0,0.28);
+    }
+
+    .ribbon {
+      position: absolute;
+      left: 50%;
+      bottom: 132px;
+      width: 118px;
+      height: 32px;
+      transform: translateX(-50%);
+      border-radius: 30px;
+      background: linear-gradient(90deg, #ff78ae, #ff3d86);
+      box-shadow:
+        0 0 20px rgba(255, 70, 140, 0.35),
+        inset 0 2px 4px rgba(255,255,255,0.2);
+      z-index: 8;
+    }
+
+    .ribbon::before,
+    .ribbon::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #ff81b3, #ff438a);
+      border-radius: 12px 42px 12px 42px;
+      z-index: -1;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+    }
+
+    .ribbon::before {
+      left: -24px;
+      transform: rotate(36deg);
+    }
+
+    .ribbon::after {
+      right: -24px;
+      transform: scaleX(-1) rotate(36deg);
+    }
+
+    .tail {
+      position: absolute;
+      width: 18px;
+      height: 100px;
+      background: linear-gradient(180deg, #ff79af, #ff438a);
+      bottom: -91px;
+      border-radius: 10px;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
+    }
+
+    .tail.left {
+      left: 31px;
+      transform: rotate(10deg);
+      clip-path: polygon(0 0, 100% 0, 85% 78%, 50% 100%, 15% 78%);
+    }
+
+    .tail.right {
+      right: 31px;
+      transform: rotate(-10deg);
+      clip-path: polygon(0 0, 100% 0, 85% 78%, 50% 100%, 15% 78%);
+    }
+
+    .title {
+      position: absolute;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      color: #fff6fb;
+      font-size: clamp(20px, 2.6vw, 32px);
+      letter-spacing: 0.5px;
+      z-index: 9;
+      text-shadow: 0 0 10px rgba(255,255,255,0.18);
+      white-space: nowrap;
+      font-weight: bold;
+      background-color: #915cf2;
+    }
+
+    .subtitle {
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.72);
+      font-size: clamp(12px, 1.3vw, 15px);
+      z-index: 9;
+      white-space: nowrap;
+    }
+
+    .falling-petal {
+      position: absolute;
+      top: -60px;
+      width: 18px;
+      height: 28px;
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.9;
+      pointer-events: none;
+      animation-name: fall, sway, spin;
+      animation-timing-function: linear, ease-in-out, linear;
+      animation-iteration-count: infinite, infinite, infinite;
+      filter: blur(0.2px) drop-shadow(0 0 6px rgba(255,255,255,0.12));
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-80px); }
+      to { transform: translateY(1100px); }
+    }
+
+    @keyframes sway {
+      0%, 100% { margin-left: 0; }
+      25% { margin-left: 18px; }
+      50% { margin-left: -20px; }
+      75% { margin-left: 14px; }
+    }
+
+    @keyframes spin {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    .base-shadow {
+      position: absolute;
+      left: 50%;
+      bottom: 86px;
+      transform: translateX(-50%);
+      width: 310px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,0.3), transparent 70%);
+      filter: blur(12px);
+      z-index: 0;
+    }
+
+    @media (max-width: 768px) {
+      .bouquet-area {
+        width: 520px;
+        height: 700px;
+      }
+
+      .title {
+        bottom: 46px;
+      }
+
+      .subtitle {
+        bottom: 22px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .scene {
+        width: 100vw;
+        height: 100vh;
+        aspect-ratio: auto;
+        border-radius: 0;
+      }
+
+      .bouquet-area {
+        transform: translate(-50%, -50%) scale(0.82);
+      }
+
+      @keyframes floaty {
+        0%, 100% { transform: translate(-50%, -50%) scale(0.82) translateY(0); }
+        50% { transform: translate(-50%, -50%) scale(0.82) translateY(-10px); }
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="title"> خسل 🫶🏻🫶🏻</div>
+  <div class="scene" id="scene">
+    <div class="ambient-light"></div>
+    <div class="sparkles" id="sparkles"></div>
+
+    <div class="bouquet-area">
+      <div class="base-shadow"></div>
+      <div class="glow"></div>
+
+      <div class="wrap-back-left"></div>
+      <div class="wrap-back-right"></div>
+
+      <div class="stems">
+        <div class="stem" style="height:305px; left:52px; top:10px; transform:rotate(18deg);"></div>
+        <div class="stem" style="height:292px; left:90px; top:16px; transform:rotate(12deg);"></div>
+        <div class="stem" style="height:286px; left:128px; top:10px; transform:rotate(6deg);"></div>
+        <div class="stem" style="height:282px; left:167px; top:4px; transform:rotate(0deg);"></div>
+        <div class="stem" style="height:286px; left:206px; top:10px; transform:rotate(-6deg);"></div>
+        <div class="stem" style="height:292px; left:244px; top:16px; transform:rotate(-12deg);"></div>
+        <div class="stem" style="height:305px; left:282px; top:10px; transform:rotate(-18deg);"></div>
+
+        <div class="stem" style="height:246px; left:106px; top:62px; transform:rotate(8deg);"></div>
+        <div class="stem" style="height:246px; left:228px; top:62px; transform:rotate(-8deg);"></div>
+
+        <div class="leaf" style="left:34px; top:120px; transform:rotate(-25deg);"></div>
+        <div class="leaf" style="left:242px; top:130px; transform:scaleX(-1) rotate(-22deg);"></div>
+        <div class="leaf" style="left:76px; top:214px; transform:rotate(-10deg) scale(.95);"></div>
+        <div class="leaf" style="left:200px; top:225px; transform:scaleX(-1) rotate(-14deg) scale(.92);"></div>
+        <div class="leaf" style="left:130px; top:292px; transform:rotate(8deg) scale(.88);"></div>
+        <div class="leaf" style="left:175px; top:170px; transform:scaleX(-1) rotate(18deg) scale(.78);"></div>
+      </div>
+
+      <!-- الصف العلوي -->
+      <div class="flower pink" style="left:205px; top:18px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower red" style="left:118px; top:58px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower white" style="left:292px; top:60px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <!-- الصف الأوسط -->
+      <div class="flower purple" style="left:205px; top:112px; transform:scale(.96);">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower pink small" style="left:82px; top:145px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower white small" style="left:315px; top:148px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <!-- الصف السفلي -->
+      <div class="flower peach small" style="left:135px; top:214px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower red small" style="left:255px; top:214px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="flower pink tiny" style="left:205px; top:240px;">
+        <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div><div class="petal p6"></div><div class="petal p7"></div><div class="petal p8"></div>
+        <div class="inner-petal i1"></div><div class="inner-petal i2"></div><div class="inner-petal i3"></div>
+        <div class="center"></div>
+      </div>
+
+      <div class="wrap-front-left"></div>
+      <div class="wrap-front-right"></div>
+
+      <div class="ribbon">
+        <div class="tail left"></div>
+        <div class="tail right"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scene = document.getElementById("scene");
+    const sparkles = document.getElementById("sparkles");
+
+    const petalColors = [
+      ["#ffb7cf", "#ff7daa"],
+      ["#ffffff", "#e9e0ea"],
+      ["#d7b7ff", "#a673ff"],
+      ["#ffb29f", "#ff8a68"],
+      ["#ff8ca1", "#ff5976"]
+    ];
+
+    function createFallingPetal() {
+      const petal = document.createElement("div");
+      petal.className = "falling-petal";
+
+      const colorPair = petalColors[Math.floor(Math.random() * petalColors.length)];
+      const left = Math.random() * scene.clientWidth;
+      const size = 10 + Math.random() * 16;
+      const fallDuration = 8 + Math.random() * 7;
+      const swayDuration = 2.6 + Math.random() * 2.8;
+      const spinDuration = 4 + Math.random() * 5;
+      const delay = Math.random() * 4;
+
+      petal.style.left = left + "px";
+      petal.style.width = size + "px";
+      petal.style.height = size * 1.45 + "px";
+      petal.style.background = `linear-gradient(180deg, ${colorPair[0]}, ${colorPair[1]})`;
+      petal.style.animationDuration = `${fallDuration}s, ${swayDuration}s, ${spinDuration}s`;
+      petal.style.animationDelay = `${delay}s, ${delay}s, ${delay}s`;
+      petal.style.opacity = 0.55 + Math.random() * 0.35;
+
+      scene.appendChild(petal);
+
+      setTimeout(() => {
+        petal.remove();
+      }, (fallDuration + delay) * 1000);
+    }
+
+    function createSparkles(count = 18) {
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 65 + "%";
+        s.style.animationDelay = Math.random() * 3 + "s";
+        s.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+        s.style.opacity = 0.2 + Math.random() * 0.7;
+        sparkles.appendChild(s);
+      }
+    }
+
+    createSparkles();
+
+    for (let i = 0; i < 28; i++) {
+      createFallingPetal();
+    }
+
+    setInterval(createFallingPetal, 380);
+  </script>
+</body>
+</html>
