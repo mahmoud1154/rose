@@ -382,20 +382,38 @@
       clip-path: polygon(0 0, 100% 0, 85% 78%, 50% 100%, 15% 78%);
     }
 
-    .title {
-      position: absolute;
-      left: 50%;
-      bottom: 40px;
-      transform: translateX(-50%);
-      color: #fff6fb;
-      font-size: clamp(20px, 2.6vw, 32px);
-      letter-spacing: 0.5px;
-      z-index: 9;
-      text-shadow: 0 0 10px rgba(255,255,255,0.18);
-      white-space: nowrap;
-      font-weight: bold;
-      background-color: #915cf2;
-    }
+.title {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translateX(-50%);
+  padding: 8px 22px;
+  border-radius: 25px;
+
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  color: #fff;
+
+  background: linear-gradient(135deg, #ffb6c9, #ffc9d8);
+  
+  box-shadow:
+    0 6px 18px rgba(255, 150, 180, 0.25),
+    inset 0 1px 3px rgba(255,255,255,0.4);
+
+  backdrop-filter: blur(4px);
+
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+  animation: titleFloat 4s ease-in-out infinite;
+  z-index: 10;
+}
+
+@keyframes titleFloat {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
 
     .subtitle {
       position: absolute;
